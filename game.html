@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        #big{
+            position: relative;
+            border:1px solid red;
+            width: 400px;
+            height:400px;
+            overflow : hidden;
+        }
+        #main{
+            position: relative;
+            top: -100px;
+        }
+        .row{
+            width:400px;
+            height:100px;
+        }
+        .row div{
+            width: 98px;
+            height: 98px;
+            border:1px solid gray;
+            float: left;
+        }
+        .black{
+            background: black;
+        }
+    </style>
+</head>
+<body>
+<div id="big">
+    <div id="main"></div>
+</div>
+<hr>
+您的分数是<h2>0<h2>
+</body>
+<script>
+    var main = document.getElementById('main');
+    //创建div的函数,如果有classname就使用,没有就不设置
+    function factory(className){
+        var div = document.createElement('div');
+        if(className){
+            div.className = className;
+        }
+        return div;
+    }
+    //随机生成一个特定的数字设为黑色的方块index的函数
+    function crow (){
+        var index = Math.floor(Math.random()*4);
+        var row = factory('row');
+        for(var i= 0;i<4;i++){
+            if(i==index){
+                row.appendChild(factory('black'));
+            }else {
+                row.appendChild(factory());
+            }
+        }
+        if(main.firstChild){
+            main.insertBefore(row,main.firstChild);
+        }else{
+            main.appendChild(row);
+        }
+    }
+    var spand = 2;
+    var sta = true;
+    function inter(){
+        for(var i=0;i<4;i++){
+            crow()
+        }
+        main.onclick = function(ev){
+            if(sta==false){
+                alert('boom');
+            }else if(ev.target.className ==''){
+                sta = false;
+                clearInterval(dsq);
+                alert('boom');
+            }else{
+                ev.target.className ='';
+                ev.target.parentNode.pass = true;
+                var sc = document.querySelector('h2');
+                sc.innerHTML = parseInt(sc.innerHTML)+1;
+                if(parseInt(sc.innerHTML)%10==0){
+                    spand+=2;
+                }
+            }
+        }
+    }
+    inter();
+    function move(){
+        var top =parseInt(getComputedStyle(main).top);
+        main.style.top = spand+top+'px';
+        main.lastChild.pass==true;
+        if(top>0){
+            crow();
+            main.style.top ='-100px';
+            console.log(main.lastChild.pass);
+           if(main.lastChild.pass == undefined){
+               sta =false;
+               clearInterval(dsq);
+               alert('boom');
+           }
+        }
+            if(main.children.length>=6){
+                main.removeChild(main.lastChild);
+
+        }
+    }
+    var dsq = setInterval(move,30);
+
+</script>
+</html>
